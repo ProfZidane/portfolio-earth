@@ -109,7 +109,7 @@ export const countriesData = [
   },
 
   {
-    name: "Ivory Coast",
+    name: "Côte d'Ivoire",
     lat: 7.539989,
     lng: -5.54708,
     experiences: [
