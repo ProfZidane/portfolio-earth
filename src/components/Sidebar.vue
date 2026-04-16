@@ -59,6 +59,7 @@ defineEmits(['close'])
 </script>
 
 <style scoped>
+/* ── Desktop: right panel ── */
 .sidebar {
   position: fixed;
   top: 0;
@@ -77,13 +78,58 @@ defineEmits(['close'])
   box-shadow: -20px 0 80px rgba(0, 0, 0, 0.6);
 }
 
-/* Slide transition */
+/* Desktop slide-in from right */
 .sidebar-enter-active, .sidebar-leave-active {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 }
 .sidebar-enter-from, .sidebar-leave-to {
   transform: translateX(100%);
   opacity: 0;
+}
+
+/* ── Mobile: bottom sheet ── */
+@media (max-width: 768px) {
+  .sidebar {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 72vh;
+    border-left: none;
+    border-top: 1px solid var(--glass-border);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Slide-in from bottom on mobile */
+  .sidebar-enter-from, .sidebar-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .sidebar-header {
+    padding: 16px 20px 14px;
+    /* drag handle */
+    position: relative;
+  }
+
+  .sidebar-header::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .sidebar-title {
+    font-size: 20px;
+  }
 }
 
 .sidebar-header {

@@ -14,19 +14,25 @@ const emit = defineEmits(['country-click'])
 const globeContainer = ref(null)
 let world = null
 
+const isMobile = () => window.innerWidth <= 768
+
 watch(() => props.sidebarOpen, (open) => {
   if (!world) return
   world.controls().autoRotate = !open
 })
 
 onMounted(async () => {
+  const mobile = isMobile()
+
   world = Globe()(globeContainer.value)
     .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
     .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+    .width(globeContainer.value.clientWidth)
+    .height(globeContainer.value.clientHeight)
 
   world.controls().autoRotate = true
-  world.controls().autoRotateSpeed = 0.4
-  world.pointOfView({ lat: 20, lng: 0, altitude: 2 })
+  world.controls().autoRotateSpeed = mobile ? 0.6 : 0.4
+  world.pointOfView({ lat: 20, lng: 0, altitude: mobile ? 1.8 : 2 })
 
   const res = await fetch('/data/countries.json')
   const data = await res.json()
@@ -55,26 +61,41 @@ onMounted(async () => {
       const hit = countriesData.find(c => c.name === d.properties.name)
       return hit ? 0.04 : 0.01
     })
-    .onPolygonHover((hoverD) => {
-      world.polygonAltitude((d) => {
-        const isVisited = countriesData.find(c => c.name === d.properties.name)
-        if (d === hoverD && isVisited) return 0.07
-        return isVisited ? 0.04 : 0.01
-      })
-      world.polygonCapColor((d) => {
-        const isVisited = countriesData.find(c => c.name === d.properties.name)
-        if (!isVisited) return 'rgba(80, 80, 80, 0.05)'
-        return d === hoverD ? 'rgba(0, 255, 200, 1)' : 'rgba(0, 255, 200, 0.75)'
-      })
-    })
-    .onPolygonClick((polygon) => {
-      const countryData = countriesData.find(c => c.name === polygon.properties.name)
-      if (!countryData) return
 
-      world.controls().autoRotate = false
-      world.pointOfView({ lat: countryData.lat, lng: countryData.lng, altitude: 0.6 }, 1000)
-      emit('country-click', countryData)
-    })
+  // Hover effects only on desktop (too heavy / no hover on touch)
+  if (!mobile) {
+    world
+      .onPolygonHover((hoverD) => {
+        world.polygonAltitude((d) => {
+          const isVisited = countriesData.find(c => c.name === d.properties.name)
+          if (d === hoverD && isVisited) return 0.07
+          return isVisited ? 0.04 : 0.01
+        })
+        world.polygonCapColor((d) => {
+          const isVisited = countriesData.find(c => c.name === d.properties.name)
+          if (!isVisited) return 'rgba(80, 80, 80, 0.05)'
+          return d === hoverD ? 'rgba(0, 255, 200, 1)' : 'rgba(0, 255, 200, 0.75)'
+        })
+      })
+  }
+
+  world.onPolygonClick((polygon) => {
+    const countryData = countriesData.find(c => c.name === polygon.properties.name)
+    if (!countryData) return
+
+    world.controls().autoRotate = false
+    const altitude = mobile ? 1.0 : 0.6
+    world.pointOfView({ lat: countryData.lat, lng: countryData.lng, altitude }, 1000)
+    emit('country-click', countryData)
+  })
+
+  // Keep globe sized to container on resize
+  const ro = new ResizeObserver(() => {
+    world
+      .width(globeContainer.value.clientWidth)
+      .height(globeContainer.value.clientHeight)
+  })
+  ro.observe(globeContainer.value)
 })
 </script>
 
