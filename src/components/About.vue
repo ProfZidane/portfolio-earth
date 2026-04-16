@@ -72,13 +72,13 @@
       <div class="about-block fade-in" style="--delay: 0.4s">
         <p class="label">Connect</p>
         <div class="connect-grid">
-          <a href="mailto:your@email.com" class="connect-btn primary">
-            <span class="btn-icon">✉</span> Contact Me
-          </a>
-          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="connect-btn">
+          <!-- <a href="https://www.linkedin.com/in/zidane-mohamed-8a54561b2/" class="connect-btn primary">
+            <span class="btn-icon">✉</span> Contact Me On LinkedIn
+          </a> -->
+          <a href="https://www.linkedin.com/in/zidane-mohamed-8a54561b2/" target="_blank" rel="noopener" class="connect-btn">
             <span class="btn-icon">in</span> LinkedIn
           </a>
-          <a href="https://medium.com/@yourprofile" target="_blank" rel="noopener" class="connect-btn">
+          <a href="https://www.blog-zidane.com/" target="_blank" rel="noopener" class="connect-btn">
             <span class="btn-icon">✍</span> Articles
           </a>
         </div>
