@@ -53,7 +53,7 @@ export const countriesData = [
       {
         company: "Dod&Cie",
         role: "Full Stack Engineer (Freelance)",
-        period: "2024",
+        period: "2022",
         story: {
           context: "Built a custom order and stock management platform.",
           challenge: "Simplifying complex ordering workflows.",

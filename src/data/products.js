@@ -1,112 +1,209 @@
 export const products = [
   {
-    id: 'zsuite',
-    title: 'Z-SUITE',
-    tagline: 'AI-powered business management for emerging markets.',
-    description: 'Z-SUITE is a full SaaS platform built to help businesses in Ivory Coast and Cameroon manage operations, track performance, and make data-driven decisions. It integrates AI modules for forecasting, anomaly detection, and automated reporting — all in a single dashboard designed for non-technical users.',
-    tags: ['SaaS', 'AI', 'Business'],
-    tech: ['Vue.js', 'Spring Boot', 'PostgreSQL', 'Python', 'TensorFlow', 'Docker'],
+    id: "z-suite",
+    title: "Z-SUITE",
+    tagline: "AI-powered SaaS for modern commerce management",
+    description:
+      "Z-SUITE is a SaaS platform designed to help businesses manage their entire sales ecosystem. From inventory and suppliers to financial insights, the platform leverages AI and data to support smarter decision-making.",
+    tags: ["SaaS", "AI", "Business"],
+    tech: ["Angular", "Node.js", "MongoDB"],
     features: [
-      'AI-powered sales forecasting',
-      'Real-time inventory & stock tracking',
-      'Automated financial reporting',
-      'Multi-tenant architecture',
-      'Role-based access control',
-      'Mobile-responsive dashboard',
+      "Full sales and inventory management",
+      "Supplier and order tracking",
+      "Financial analytics dashboard",
+      "AI-assisted decision making"
     ],
-    cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=85',
+    link: "https://www.z-suite.com",
+    cover: "/images/zsuite/cover.png",
     images: [
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=85',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=85',
-      'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=85',
-    ],
+      "/images/zsuite/1.png",
+      "/images/zsuite/2.png",
+      "/images/zsuite/3.png"
+    ]
   },
+
   {
-    id: 'digitlab',
-    title: 'DigitLab',
-    tagline: 'A tech studio shipping digital products across West Africa.',
-    description: 'DigitLab is a digital agency and product studio co-founded to deliver high-quality mobile and web solutions for clients across West Africa. The studio managed a team of 10+ engineers and designers, delivering over 15 client projects ranging from e-commerce platforms to internal business tools.',
-    tags: ['Studio', 'Mobile', 'Web'],
-    tech: ['React Native', 'Angular', 'Node.js', 'Firebase', 'Flutter'],
+    id: "intevoo",
+    title: "Intevoo",
+    tagline: "All-in-one career platform powered by AI",
+    description:
+      "Intevoo helps users build, showcase, and accelerate their careers with AI-driven tools including CV generation, cover letters, and talent matching.",
+    tags: ["SaaS", "AI"],
+    tech: ["Vue.js", "Node.js"],
     features: [
-      'Mobile app development (iOS & Android)',
-      'Custom web application delivery',
-      'UI/UX design system',
-      'Client project management',
-      'E-commerce integrations',
-      'Team of 10+ engineers',
+      "AI-generated CV and cover letters",
+      "Digital portfolios",
+      "Job marketplace",
+      "Talent pool system"
     ],
-    cover: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=85',
+    link: "https://www.intevoo.app/fr",
+    cover: "/images/intevoo/cover.png",
     images: [
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=85',
-      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=85',
-      'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=85',
-    ],
+      "/images/intevoo/1.png"
+    ]
   },
+
   {
-    id: 'dodcie',
-    title: 'Dod&Cie Platform',
-    tagline: 'End-to-end order & stock management for retail.',
-    description: 'A custom ERP-style platform built for a retail business to replace manual spreadsheet workflows. The system handles the full order lifecycle — from supplier orders to client delivery — with real-time stock tracking, admin dashboards, and automated low-stock alerts.',
-    tags: ['Web', 'ERP', 'Fullstack'],
-    tech: ['Angular', 'Spring Boot', 'MySQL', 'Docker', 'REST API'],
+    id: "nest-ai",
+    title: "NestAI",
+    tagline: "Find the best housing deals with AI",
+    description:
+      "NestAI scrapes housing listings across multiple platforms, scores them based on your personal criteria (price, location, size, etc.), and generates ready-to-send messages for landlords. It transforms the way you search for accommodation by automating the most time-consuming steps.",
+    tags: ["AI", "Automation", "Real Estate"],
+    tech: ["Vue.js", "Node.js"],
     features: [
-      'Real-time stock management',
-      'Full order lifecycle tracking',
-      'Supplier & client management',
-      'Automated low-stock alerts',
-      'Admin dashboard with analytics',
-      'PDF invoice generation',
+      "Housing listings aggregation",
+      "Smart scoring based on user preferences",
+      "AI-generated contact messages",
+      "Time-saving search automation"
     ],
-    cover: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=85',
+    link: "https://nest-ai-kappa.vercel.app/",
+    cover: "/images/nestai/cover.png",
     images: [
-      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=85',
-      'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=85',
-      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=85',
-    ],
+      "/images/nestai/1.png"
+    ]
   },
+
   {
-    id: 'ticketing',
-    title: 'Ticketing System',
-    tagline: 'Real-time event ticketing with seat management.',
-    description: 'A complete event ticketing platform built for event organizers. Users can browse events, select seats on an interactive map, and pay online. Organizers get a full back-office to manage events, scan QR tickets at the door, and track revenue in real time.',
-    tags: ['Web', 'Realtime', 'Payments'],
-    tech: ['Vue.js', 'Node.js', 'Stripe', 'WebSockets', 'MongoDB', 'QR Code API'],
+    id: "sec-grow",
+    title: "SEC-GROW Framework",
+    tagline: "Security maturity framework for startups",
+    description:
+      "SEC-GROW helps startups assess and improve their cybersecurity maturity through a fast, structured evaluation process.",
+    tags: ["Security", "Framework"],
+    tech: ["Vue.js"],
     features: [
-      'Interactive seat map selection',
-      'Stripe payment integration',
-      'QR code ticket generation & scanning',
-      'Real-time seat availability (WebSockets)',
-      'Organizer back-office dashboard',
-      'Revenue analytics',
+      "20-question assessment",
+      "Security maturity scoring",
+      "Actionable recommendations"
     ],
-    cover: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=85',
+    link: "https://sec-grow-framework.vercel.app/",
+    cover: "/images/secgrow/cover.png",
     images: [
-      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=85',
-      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=85',
-      'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1200&q=85',
-    ],
+      "/images/secgrow/1.png"
+    ]
   },
+
   {
-    id: 'carrental',
-    title: 'Car Rental Platform',
-    tagline: 'Full-featured fleet & booking management.',
-    description: 'A web platform for a car rental company to manage their fleet, handle online bookings, and provide clients with a self-service portal. The system includes availability calendars, automated pricing rules, contract generation, and a driver management module.',
-    tags: ['Web', 'Booking', 'Fullstack'],
-    tech: ['Angular', 'Spring Boot', 'PostgreSQL', 'Stripe', 'PDF.js'],
+    id: "swapstay",
+    title: "SwapStay",
+    tagline: "Track and manage your purchases easily",
+    description:
+      "SwapStay centralizes and simplifies purchase tracking, helping users manage their transactions and keep control over their spending.",
+    tags: ["SaaS"],
+    tech: [],
     features: [
-      'Online booking with availability calendar',
-      'Fleet management & maintenance tracking',
-      'Automated pricing rules',
-      'Client self-service portal',
-      'Contract & invoice PDF generation',
-      'Driver management module',
+      "Purchase tracking",
+      "Centralized management",
+      "User-friendly interface"
     ],
-    cover: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1200&q=85',
+    link: "https://swap-stay.com/",
+    cover: "/images/swapstay/cover.png",
     images: [
-      'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1200&q=85',
-      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=85',
-      'https://images.unsplash.com/photo-1485291571150-772bcfc10da5?w=1200&q=85',
-    ],
+      "/images/swapstay/1.png"
+    ]
   },
+
+  {
+    id: "blogz",
+    title: "BlogZ",
+    tagline: "Insights on AI, data and software engineering",
+    description:
+      "A personal blog sharing knowledge and insights on AI, data science, and software engineering topics.",
+    tags: ["Content", "AI"],
+    tech: ["Web"],
+    features: [
+      "Technical articles",
+      "AI insights",
+      "Engineering topics"
+    ],
+    link: "https://www.blog-zidane.com/",
+    cover: "/images/blogz/cover.png",
+    images: [
+      "/images/blogz/1.png"
+    ]
+  },
+
+  {
+    id: "recommandify",
+    title: "Recommandify",
+    tagline: "AI recommendation engine with API",
+    description:
+      "A platform providing personalized product recommendations using AI algorithms, easily integrable via API.",
+    tags: ["SaaS", "AI"],
+    tech: ["Angular", "Django", "MySQL"],
+    features: [
+      "Recommendation algorithms",
+      "API integration",
+      "Personalized suggestions"
+    ],
+    cover: "/images/recommandify/cover.png",
+    images: [
+      "/images/recommandify/1.png",
+      "/images/recommandify/2.png"
+    ]
+  },
+
+  {
+    id: "kibi-app",
+    title: "KIBI App",
+    tagline: "Event creation and ticketing platform",
+    description:
+      "KIBI allows users to create events, promote them, and sell tickets through a complete digital platform.",
+    tags: ["SaaS"],
+    tech: ["Angular", "Node.js", "MongoDB"],
+    features: [
+      "Event creation",
+      "Ticket sales",
+      "Promotion tools"
+    ],
+    cover: "/images/kibi/cover.png",
+    images: [
+      "/images/kibi/1.png"
+    ]
+  },
+
+  {
+    id: "sih",
+    title: "SIH - Hospital Information System",
+    tagline: "Smart hospital management system",
+    description:
+      "A full hospital management system including patient tracking, billing, and AI-based disease prediction.",
+    tags: ["SaaS", "AI", "Medical"],
+    tech: ["Angular", "Node.js", "MongoDB", "Python"],
+    features: [
+      "Patient management",
+      "Medical records",
+      "Statistics dashboard",
+      "AI prediction"
+    ],
+    cover: "/images/sih/cover.png",
+    images: [
+      "/images/sih/1.png",
+      "/images/sih/2.png",
+      "/images/sih/3.png",
+      "/images/sih/4.png",
+      "/images/sih/5.png",
+      "/images/sih/6.png"
+    ]
+  },
+
+  {
+    id: "smart-setup",
+    title: "Smart Setup",
+    tagline: "IoT smart home system",
+    description:
+      "A connected home system allowing control of devices and real-time monitoring through IoT architecture.",
+    tags: ["IoT"],
+    tech: ["Arduino", "Node.js", "MongoDB"],
+    features: [
+      "Device control",
+      "IoT monitoring",
+      "Real-time data"
+    ],
+    cover: "/images/smartsetup/cover.png",
+    images: [
+      "/images/smartsetup/1.png"
+    ]
+  }
 ]

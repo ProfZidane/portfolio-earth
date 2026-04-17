@@ -66,6 +66,19 @@
                 <span v-for="t in product.tech" :key="t" class="tech-tag">{{ t }}</span>
               </div>
             </div>
+
+            <a
+              v-if="product.link"
+              :href="product.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="visit-btn"
+            >
+              Visit Website
+              <svg class="ext-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
 
         </div>
@@ -340,5 +353,37 @@ watch(() => props.product, (val) => {
 .tech-tag:hover {
   border-color: rgba(0, 255, 200, 0.3);
   color: var(--cyan);
+}
+
+/* ── Visit Website button ── */
+.visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  margin-top: 4px;
+}
+
+.visit-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: rgba(0, 255, 200, 0.18);
+  border-color: rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 24px rgba(0, 255, 200, 0.2);
+}
+
+.ext-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
 }
 </style>
