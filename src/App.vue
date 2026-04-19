@@ -2,6 +2,8 @@
   <div class="app">
     <Navbar :current="currentView" @navigate="navigate" />
 
+    <IntroOverlay @done="introSeen = true" />
+
     <!-- Globe view -->
     <template v-if="currentView === 'world'">
       <Globe :sidebar-open="!!selectedCountry" @country-click="onCountryClick" />
@@ -27,6 +29,9 @@ import Globe from './components/Globe.vue'
 import Sidebar from './components/Sidebar.vue'
 import ProductPage from './components/ProductPage.vue'
 import About from './components/About.vue'
+import IntroOverlay from './components/IntroOverlay.vue'
+
+const introSeen = ref(false)
 
 const currentView = ref('world')
 const selectedCountry = ref(null)

@@ -1,51 +1,108 @@
 <template>
   <div class="products-page">
+
     <div class="page-header">
       <p class="page-label">Portfolio</p>
       <h1 class="page-title">Product Islands</h1>
-      <p class="page-sub">Systems built across the world</p>
+      <p class="page-sub">Systems built across the world — click to explore</p>
     </div>
 
-    <div class="products-grid">
+    <!-- Horizontal scroll track -->
+    <div
+      class="scroll-track"
+      ref="trackRef"
+      @mousedown="startDrag"
+      @mousemove="onDrag"
+      @mouseup="stopDrag"
+      @mouseleave="stopDrag"
+    >
       <div
         v-for="product in products"
         :key="product.id"
         class="product-card"
-        @mouseenter="activeCarousel[product.id] = 0"
+        @click="openModal(product)"
       >
         <div class="card-image">
-          <img
-            :src="product.images[carouselIndex[product.id] ?? 0]"
-            :alt="product.title"
-          />
-          <div class="carousel-dots" v-if="product.images.length > 1">
-            <span
-              v-for="(_, i) in product.images"
-              :key="i"
-              :class="['dot', { active: (carouselIndex[product.id] ?? 0) === i }]"
-              @click.stop="carouselIndex[product.id] = i"
-            />
-          </div>
-          <div class="card-glow"></div>
-        </div>
-        <div class="card-body">
+          <img :src="product.cover" :alt="product.title" draggable="false" />
+          <div class="card-overlay"></div>
           <div class="card-tags">
             <span v-for="tag in product.tags" :key="tag" class="tag">{{ tag }}</span>
           </div>
+        </div>
+        <div class="card-body">
           <h3 class="card-title">{{ product.title }}</h3>
-          <p class="card-desc">{{ product.description }}</p>
+          <p class="card-tagline">{{ product.tagline }}</p>
+          <span class="card-cta">Explore →</span>
         </div>
       </div>
     </div>
+
+    <!-- Scroll hint -->
+    <p class="scroll-hint">← drag or scroll to explore →</p>
+
+    <ProductModal :product="activeProduct" @close="activeProduct = null" />
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { products } from '../data/products.js'
+import ProductModal from './ProductModal.vue'
 
-const carouselIndex = reactive({})
-const activeCarousel = reactive({})
+const activeProduct = ref(null)
+const trackRef = ref(null)
+
+const openModal = (product) => {
+  if (!isDragging.value) activeProduct.value = product
+}
+
+// ── Wheel → horizontal scroll (passive, works for trackpad + mouse wheel) ──
+const onWheel = (e) => {
+  // If the event has horizontal delta (trackpad native swipe), let it pass through.
+  // Only redirect vertical-only scroll (mouse wheel) to horizontal.
+  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
+  trackRef.value.scrollLeft += e.deltaY
+}
+
+onMounted(() => {
+  // passive:true lets the browser handle trackpad momentum natively
+  trackRef.value.addEventListener('wheel', onWheel, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  trackRef.value?.removeEventListener('wheel', onWheel)
+})
+
+// ── Drag to scroll ──
+const isDragging = ref(false)
+let dragStartX = 0
+let scrollStartX = 0
+let dragMoved = false
+
+const startDrag = (e) => {
+  isDragging.value = false
+  dragMoved = false
+  dragStartX = e.pageX
+  scrollStartX = trackRef.value.scrollLeft
+  trackRef.value.style.cursor = 'grabbing'
+  trackRef.value.style.userSelect = 'none'
+}
+
+const onDrag = (e) => {
+  if (e.buttons !== 1) return
+  const delta = e.pageX - dragStartX
+  if (Math.abs(delta) > 4) {
+    isDragging.value = true
+    dragMoved = true
+  }
+  if (dragMoved) trackRef.value.scrollLeft = scrollStartX - delta
+}
+
+const stopDrag = () => {
+  trackRef.value.style.cursor = 'grab'
+  trackRef.value.style.userSelect = ''
+  setTimeout(() => { isDragging.value = false }, 0)
+}
 </script>
 
 <style scoped>
@@ -53,13 +110,18 @@ const activeCarousel = reactive({})
   position: fixed;
   inset: 0;
   background: #050a12;
-  overflow-y: auto;
-  padding: 100px 48px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
 
+/* ── Header ── */
 .page-header {
   text-align: center;
-  margin-bottom: 56px;
+  padding-top: 90px;
+  padding-bottom: 40px;
+  flex-shrink: 0;
 }
 
 .page-label {
@@ -71,43 +133,75 @@ const activeCarousel = reactive({})
 }
 
 .page-title {
-  font-size: 48px;
+  font-size: 44px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .page-sub {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-muted);
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+/* ── Scroll track ── */
+.scroll-track {
+  display: flex;
   gap: 28px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 20px 80px 32px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+  cursor: grab;
+  flex-shrink: 0;
+  scrollbar-width: none;
+  /* enable native touch/trackpad horizontal scroll */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
+.scroll-track::-webkit-scrollbar { display: none; }
 
+/* ── Card ── */
 .product-card {
+  flex-shrink: 0;
+  width: 380px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .scroll-track {
+    padding: 16px 24px 24px;
+    gap: 18px;
+  }
+  .product-card {
+    width: 80vw;
+    max-width: 320px;
+  }
+  .page-title { font-size: 30px; }
+  .page-header { padding-top: 80px; padding-bottom: 24px; }
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-10px) scale(1.02);
   border-color: var(--cyan-glow);
-  box-shadow: 0 0 40px rgba(0, 255, 200, 0.12), 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 200, 0.15),
+    0 0 50px rgba(0, 255, 200, 0.12),
+    0 30px 70px rgba(0, 0, 0, 0.6);
 }
 
+/* ── Card image ── */
 .card-image {
   position: relative;
-  height: 200px;
+  height: 240px;
   overflow: hidden;
 }
 
@@ -115,52 +209,33 @@ const activeCarousel = reactive({})
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
+  pointer-events: none;
 }
 
 .product-card:hover .card-image img {
-  transform: scale(1.05);
+  transform: scale(1.07);
 }
 
-.card-glow {
+.card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(5, 10, 18, 0.8) 0%, transparent 60%);
-}
-
-.carousel-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 2;
-}
-
-.carousel-dots .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.carousel-dots .dot.active {
-  background: var(--cyan);
-  box-shadow: 0 0 6px var(--cyan);
-}
-
-.card-body {
-  padding: 20px;
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(5, 10, 18, 0.7) 80%,
+    rgba(5, 10, 18, 0.95) 100%
+  );
 }
 
 .card-tags {
+  position: absolute;
+  top: 14px;
+  left: 14px;
   display: flex;
-  flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  z-index: 2;
 }
 
 .tag {
@@ -169,22 +244,56 @@ const activeCarousel = reactive({})
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--cyan);
-  background: var(--cyan-dim);
-  border: 1px solid rgba(0, 255, 200, 0.2);
-  padding: 3px 10px;
+  background: rgba(0, 255, 200, 0.12);
+  border: 1px solid rgba(0, 255, 200, 0.25);
+  padding: 3px 9px;
   border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+
+/* ── Card body ── */
+.card-body {
+  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 8px;
 }
 
-.card-desc {
+.card-tagline {
   font-size: 13px;
   line-height: 1.6;
   color: var(--text-muted);
+}
+
+.card-cta {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.product-card:hover .card-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Scroll hint ── */
+.scroll-hint {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(232, 234, 240, 0.2);
+  padding-bottom: 24px;
+  flex-shrink: 0;
 }
 </style>
