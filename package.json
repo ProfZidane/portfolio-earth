@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "globe.gl": "^2.45.1",
     "lucide-vue-next": "^1.0.0",
     "tailwindcss": "^4.2.2",
